@@ -69,10 +69,9 @@ git_dirty() {
 }
 
 return_code() {
-  res=$?
-  if [ $res != 0 ]
+  if [ $1 != 0 ]
   then
-    echo -e "$(bold)$(color 197)✘($res) "
+    echo -e "$(bold)$(color 197)✘($1) "
   else
     echo -e "$(bold)$(color 82)✔ "
   fi
@@ -86,7 +85,8 @@ return_code() {
 #144
 #99
 prompt() {
-  echo -e "\n$(color 241)$(date +%H:%M:%S) $(return_code)$(color 81)$(whoami) $(reset_color)at $(bold)$(color 202)$(hostname) $(reset_color)in $(bold)$(color 197)$(dirs) $(reset_color)$(color 144)$(hg_branch)$(git_branch)$(hg_dirty)$(git_dirty)$(reset_color)"
+  code=$?
+  echo -e "\n$(color 241)$(date +%H:%M:%S) $(return_code $code)$(color 81)$(whoami) $(reset_color)at $(bold)$(color 202)$(hostname) $(reset_color)in $(bold)$(color 197)$(dirs) $(reset_color)$(color 144)$(hg_branch)$(git_branch)$(hg_dirty)$(git_dirty)$(reset_color)"
 }
 PROMPT_COMMAND=prompt
 PS1="$ "
